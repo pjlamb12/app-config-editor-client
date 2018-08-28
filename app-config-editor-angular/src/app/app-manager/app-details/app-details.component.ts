@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Application } from '../classes/application';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AppManagerService } from '../app-manager.service';
 
 @Component({
 	selector: 'ace-app-details',
@@ -10,13 +11,20 @@ import { of } from 'rxjs';
 	styleUrls: ['./app-details.component.scss'],
 })
 export class AppDetailsComponent implements OnInit {
-	constructor(private _route: ActivatedRoute) {}
+	public application: Application;
+	constructor(private _route: ActivatedRoute, private _appManagerService: AppManagerService) {}
 
 	ngOnInit() {
-		this._route.params.pipe(
-			switchMap((params: Params) => {
-				return params['id'] === 'add' ? of(new Application()) : of(new Application());
-			}),
-		);
+		this._route.params
+			.pipe(
+				switchMap((params: Params) => {
+					return params['id'] === 'add'
+						? of(new Application())
+						: this._appManagerService.getApplicationById(params['id']);
+				}),
+			)
+			.subscribe((app: Application) => {
+				this.application = app;
+			});
 	}
 }

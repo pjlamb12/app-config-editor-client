@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Application } from '../classes/application';
+import { AppManagerService } from '../app-manager.service';
 
 @Component({
 	selector: 'ace-landing',
@@ -7,45 +8,10 @@ import { Application } from '../classes/application';
 	styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent implements OnInit {
-	public applicationList: Application[] = [
-		{
-			id: '1',
-			name: 'Test App 1',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		},
-		{
-			id: '2',
-			name: 'Test App 2',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		},
-		{
-			id: '3',
-			name: 'Test App 2',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		},
-		{
-			id: '4',
-			name: 'Test App 2',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		},
-		{
-			id: '5',
-			name: 'Test App 2',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		},
-		{
-			id: '6',
-			name: 'Test App 2',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		},
-	];
-	constructor() {}
+	public applicationList: Application[];
+	constructor(private _appManagerService: AppManagerService) {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this._appManagerService.getApplicationList().subscribe((list: Application[]) => (this.applicationList = list));
+	}
 }
