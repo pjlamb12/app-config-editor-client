@@ -33,6 +33,10 @@ export class AppManagerService {
 		return of(this.appEnvironmentList.filter((env: AppEnvironment) => env.appId === appId));
 	}
 
+	getAppEnvironmentById(envId: string | number) {
+		return of(this.appEnvironmentList.find((env: AppEnvironment) => env.id === envId));
+	}
+
 	getApplicationById(id: string | number) {
 		return of(this.applicationList.find((app: Application) => app.id === id));
 	}

@@ -15,7 +15,7 @@
 						<button class="btn btn-success btn-block" (click)="updateEnvironment(i, nameInput.value)">Save</button>
 					</div>
 					<div class="col" *ngIf="env.id">
-						<a class="btn btn-info btn-block" [routerLink]="['', this.application.id, env.id]">Details</a>
+						<a class="btn btn-info btn-block" [routerLink]="['/applications', application.id, env.id]">Details</a>
 					</div>
 				</div>
 			</div>
