@@ -53,4 +53,20 @@ export class AppManagerService {
 	getApplicationById(id: string) {
 		return of(this.applicationList.find((app: Application) => app.id === id));
 	}
+
+	addApplication(app: Application) {
+		const nextId = this.applicationList.length + 1;
+		app.id = '' + nextId;
+		this.applicationList.push(app);
+
+		return of({ success: true });
+	}
+
+	editApplication(app: Application) {
+		const idx = this.applicationList.findIndex((appl: Application) => app.id === appl.id);
+		if (idx > -1) {
+			this.applicationList[idx] = app;
+		}
+		return of({ success: true });
+	}
 }

@@ -1,0 +1,32 @@
+<div class="form-container">
+	<ngx-loader *ngIf="isSaving" [coverContainer]="true"></ngx-loader>
+	<div class="row">
+		<div class="col">
+			<form>
+				<div class="form-row sm-margin-bottom">
+					<div class="col-md-12">
+						<label for="applicationName" class="control-label">Application Name:</label>
+						<input id="applicationName" name="applicationName" placeholder="Application Name" class="form-control" type="text" [(ngModel)]="application.name">
+					</div>
+				</div>
+				<div class="form-row sm-margin-bottom">
+					<div class="col-md-6">
+						<label for="appDetails">App Details:</label>
+						<textarea class="form-control" placeholder="App Details" name="appDetails" id="appDetails" [(ngModel)]="application.details"></textarea>
+					</div>
+					<div class="col-md-6">
+						<label for="appDetails">App Server Details:</label>
+						<textarea class="form-control" placeholder="App Server Details" name="serverDetails" id="serverDetails" [(ngModel)]="application.serverDetails"></textarea>
+					</div>
+				</div>
+				<div class="form-row sm-margin-bottom justify-content-end">
+					<div class="col col-lg-3">
+						<button (click)="saveApplication()" class="btn btn-block btn-primary">{{ application.id ? 'Save Edits' : 'Create Application'
+							}}
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
