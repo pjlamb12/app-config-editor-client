@@ -4,6 +4,7 @@ import { Application } from '../classes/application';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AppManagerService } from '../app-manager.service';
+import { AppEnvironment } from '../classes/app-environment';
 
 @Component({
 	selector: 'ace-app-details',
@@ -12,6 +13,8 @@ import { AppManagerService } from '../app-manager.service';
 })
 export class AppDetailsComponent implements OnInit {
 	public application: Application;
+	public appEnvironments: AppEnvironment[] = [];
+
 	constructor(private _route: ActivatedRoute, private _appManagerService: AppManagerService) {}
 
 	ngOnInit() {
@@ -26,5 +29,14 @@ export class AppDetailsComponent implements OnInit {
 			.subscribe((app: Application) => {
 				this.application = app;
 			});
+	}
+
+	addAppEnvironment() {
+		this.appEnvironments.push(new AppEnvironment({ appId: this.application.id }));
+	}
+
+	updateEnvironment(index: number, name: string) {
+		console.log({ index, name });
+		this.appEnvironments[index].name = name;
 	}
 }
