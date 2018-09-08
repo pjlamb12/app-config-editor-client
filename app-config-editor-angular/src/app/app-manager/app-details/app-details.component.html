@@ -1,6 +1,6 @@
 <ace-app-form *ngIf="application" [application]="application"></ace-app-form>
 
-<div class="row environment-list-container" *ngIf="appEnvironments && appEnvironments.length > 0">
+<ace-environment-list [environments]="appEnvironments">
 	<div class="col-12 col-sm-6 col-md-4" *ngFor="let env of appEnvironments; let i = index">
 		<div class="card">
 			<div class="card-body">
@@ -14,14 +14,15 @@
 					<div class="col">
 						<button class="btn btn-success btn-block" (click)="updateEnvironment(i, nameInput.value)">Save</button>
 					</div>
-					<div class="col">
-						<a class="btn btn-info btn-block" (click)="updateEnvironment(i, nameInput.value)">Details</a>
+					<div class="col" *ngIf="env.id">
+						<a class="btn btn-info btn-block" [routerLink]="['', this.application.id, env.id]">Details</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</ace-environment-list>
+
 <div class="row justify-content-end">
 	<div class="col-md-4">
 		<button (click)="addAppEnvironment()" class="btn btn-info btn-block">Add App Environment</button>

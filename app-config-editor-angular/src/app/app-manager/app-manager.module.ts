@@ -13,6 +13,8 @@ import { AppFullDetailComponent } from './app-full-detail-card/app-full-detail-c
 import { AppDetailsComponent } from './app-details/app-details.component';
 import { AppManagerService } from './app-manager.service';
 import { AppFormComponent } from './app-form/app-form.component';
+import { EnvironmentDetailsComponent } from './environment-details/environment-details.component';
+import { EnvironmentListComponent } from './environment-list/environment-list.component';
 
 @NgModule({
 	imports: [
@@ -24,7 +26,7 @@ import { AppFormComponent } from './app-form/app-form.component';
 		TextareaAutosizeModule,
 		AppManagerRoutingModule,
 	],
-	declarations: [AppListComponent, LandingComponent, AppFullDetailComponent, AppDetailsComponent, AppFormComponent],
+	declarations: [AppListComponent, LandingComponent, AppFullDetailComponent, AppDetailsComponent, AppFormComponent, EnvironmentDetailsComponent, EnvironmentListComponent],
 	providers: [AppManagerService],
 })
 export class AppManagerModule {}
