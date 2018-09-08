@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { AppManagerService } from '../app-manager.service';
 import { AppEnvironment } from '../classes/app-environment';
+import { EnvironmentProperty } from '../classes/environment-property';
 
 @Component({
 	selector: 'ace-environment-details',
@@ -21,5 +22,13 @@ export class EnvironmentDetailsComponent implements OnInit {
 				}),
 			)
 			.subscribe((env: AppEnvironment) => (this.environment = env));
+	}
+
+	addEnvironmentProp() {
+		this.environment.environmentProps.push(new EnvironmentProperty());
+	}
+
+	removeEnvironmentProp(idx: number) {
+		this.environment.environmentProps.splice(idx, 1);
 	}
 }
