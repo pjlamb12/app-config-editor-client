@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Application } from '../classes/application';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin } from 'rxjs';
 import { AppManagerService } from '../app-manager.service';
 import { AppEnvironment } from '../classes/app-environment';
 
@@ -22,12 +22,16 @@ export class AppDetailsComponent implements OnInit {
 			.pipe(
 				switchMap((params: Params) => {
 					return params['id'] === 'add'
-						? of(new Application())
-						: this._appManagerService.getApplicationById(params['id']);
+						? of([new Application(), []])
+						: forkJoin(
+								this._appManagerService.getApplicationById(params['id']),
+								this._appManagerService.getAppEnvironmentList(params['id']),
+						  );
 				}),
 			)
-			.subscribe((app: Application) => {
-				this.application = app;
+			.subscribe((data: any[]) => {
+				this.application = data[0];
+				this.appEnvironments = data[1];
 			});
 	}
 

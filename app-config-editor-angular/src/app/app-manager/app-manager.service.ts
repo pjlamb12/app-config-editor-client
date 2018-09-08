@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { Application } from './classes/application';
+import { AppEnvironment } from './classes/app-environment';
 
 @Injectable()
 export class AppManagerService {
@@ -12,35 +13,13 @@ export class AppManagerService {
 			details: 'Here are some details',
 			serverDetails: 'here are some server details',
 		}),
-		new Application({
-			id: '2',
-			name: 'Test App 2',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		}),
-		new Application({
-			id: '3',
-			name: 'Test App 3',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		}),
-		new Application({
-			id: '4',
-			name: 'Test App 4',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		}),
-		new Application({
-			id: '5',
-			name: 'Test App 5',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		}),
-		new Application({
-			id: '6',
-			name: 'Test App 6',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
+	];
+
+	private appEnvironmentList: AppEnvironment[] = [
+		new AppEnvironment({
+			id: '1',
+			appId: '1',
+			name: 'Testing',
 		}),
 	];
 
@@ -50,7 +29,11 @@ export class AppManagerService {
 		return of(this.applicationList);
 	}
 
-	getApplicationById(id: string) {
+	getAppEnvironmentList(appId: string | number) {
+		return of(this.appEnvironmentList.filter((env: AppEnvironment) => env.appId === appId));
+	}
+
+	getApplicationById(id: string | number) {
 		return of(this.applicationList.find((app: Application) => app.id === id));
 	}
 
