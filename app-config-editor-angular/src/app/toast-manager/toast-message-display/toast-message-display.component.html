@@ -1,0 +1,9 @@
+<div class="alerts-container">
+	<ng-template ngFor [ngForOf]="messagesSubject | async" let-message let-i="index">
+		<bs-alert (onClosed)="onAlertDismissed(i)" *ngIf="!message.timeout" [dismissible]="message.dismissible" [type]="message.level">{{
+			message.message }}</bs-alert>
+		<bs-alert (onClosed)="onAlertDismissed(i)" *ngIf="message.timeout" [dismissOnTimeout]="message.timeout" [dismissible]="message.dismissible"
+		 [type]="message.level">{{
+			message.message }}</bs-alert>
+	</ng-template>
+</div>
