@@ -6,24 +6,32 @@
 
 <ace-environment-list [environments]="appEnvironments">
 	<div class="col-12 col-sm-6 col-md-4" *ngFor="let env of appEnvironments; let i = index">
-		<div class="card">
-			<div class="card-body">
-				<div class="form-group">
-					<label for="" class="control-label">Environment Name:</label>
-					<input [value]="env.name" #nameInput type="text" class="form-control">
-				</div>
-			</div>
-			<div class="card-footer">
-				<div class="row">
-					<div class="col">
-						<button class="btn btn-success btn-block" (click)="updateEnvironment(i, nameInput.value)">Save</button>
-					</div>
-					<div class="col" *ngIf="env.id">
-						<a class="btn btn-info btn-block" [routerLink]="['/applications', application.id, env.id]">Details</a>
+		<form #envForm="ngForm" (submit)="$event.preventDefault()">
+			<div class="card">
+				<div class="card-body">
+					<div class="form-group">
+						<label for="" class="control-label">Environment Name:</label>
+						<input name="envName" required [ngModel]="env.name" #nameInput type="text" class="form-control">
 					</div>
 				</div>
+				<div class="card-footer">
+					<div class="row">
+						<div class="col">
+							<button [disabled]="envForm.invalid" class="btn btn-success btn-block" (click)="updateEnvironment(i, nameInput.value)">Save</button>
+						</div>
+						<div class="col" *ngIf="env.id">
+							<a class="btn btn-info btn-block" [routerLink]="['/applications', application.id, env.id]">Details</a>
+						</div>
+					</div>
+					<div class="row" *ngIf="!env.id">
+						<div class="col">
+							<br />
+							<button (click)="removeUnsavedEnvironment(i)" class="btn btn-block btn-danger">Remove</button>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </ace-environment-list>
 

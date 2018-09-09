@@ -40,7 +40,15 @@ export class AppDetailsComponent implements OnInit {
 	}
 
 	updateEnvironment(index: number, name: string) {
-		console.log({ index, name });
 		this.appEnvironments[index].name = name;
+	}
+
+	removeUnsavedEnvironment(idx: number) {
+		console.log(this.appEnvironments[idx].id);
+		if (this.appEnvironments[idx].id) {
+			console.log('returning');
+			return;
+		}
+		this.appEnvironments.splice(idx, 1);
 	}
 }
