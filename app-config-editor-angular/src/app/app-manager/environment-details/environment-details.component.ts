@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { AppManagerService } from '../app-manager.service';
 import { AppEnvironment } from '../classes/app-environment';
 import { EnvironmentProperty } from '../classes/environment-property';
+import { ToasterService } from '../../toast-manager/toaster.service';
+import { ToastMessage } from '../../toast-manager/toast-message';
 
 @Component({
 	selector: 'ace-environment-details',
@@ -12,7 +14,13 @@ import { EnvironmentProperty } from '../classes/environment-property';
 })
 export class EnvironmentDetailsComponent implements OnInit {
 	public environment: AppEnvironment;
-	constructor(private _route: ActivatedRoute, private _appManagerService: AppManagerService) {}
+	isSaving: boolean;
+	constructor(
+		private _route: ActivatedRoute,
+		private _router: Router,
+		private _appManagerService: AppManagerService,
+		private _toaster: ToasterService,
+	) {}
 
 	ngOnInit() {
 		this._route.params
@@ -30,5 +38,34 @@ export class EnvironmentDetailsComponent implements OnInit {
 
 	removeEnvironmentProp(idx: number) {
 		this.environment.environmentProps.splice(idx, 1);
+	}
+
+	addToasterMessage(message: ToastMessage) {
+		this._toaster.addMessage(message);
+	}
+
+	saveEnvironment() {
+		this.isSaving = true;
+		this._appManagerService.editAppEnvironment(this.environment).subscribe(
+			(result: any) => {
+				this.isSaving = false;
+				this.addToasterMessage(
+					new ToastMessage({
+						message: `You successfully edited the ${this.environment.name} environment!`,
+						level: 'success',
+					}),
+				);
+				this._router.navigate(['/home']);
+			},
+			(error: any) => {
+				this.isSaving = false;
+				this.addToasterMessage(
+					new ToastMessage({
+						message: `An error occurred editing this environment! ${error.message || error.msg || ''}`,
+						level: 'danger',
+					}),
+				);
+			},
+		);
 	}
 }

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Application } from './classes/application';
 import { AppEnvironment } from './classes/app-environment';
 
 @Injectable()
 export class AppManagerService {
+	private baseUrl: string = '';
+
 	private applicationList: Application[] = [
 		new Application({
 			id: '1',
@@ -25,35 +27,34 @@ export class AppManagerService {
 
 	constructor(private _http: HttpClient) {}
 
-	getApplicationList() {
-		return of(this.applicationList);
+	getApplicationList(): Observable<Application[]> {
+		return this._http.get<Application[]>(`${this.baseUrl}/applications`);
+	}
+	getApplicationById(id: string | number): Observable<Application> {
+		return this._http.get<Application>(`${this.baseUrl}/applications/${id}`);
 	}
 
-	getAppEnvironmentList(appId: string | number) {
-		return of(this.appEnvironmentList.filter((env: AppEnvironment) => env.appId === appId));
+	addApplication(app: Application): Observable<any> {
+		return this._http.post(`${this.baseUrl}/app-environments`, app);
 	}
 
-	getAppEnvironmentById(envId: string | number) {
-		return of(this.appEnvironmentList.find((env: AppEnvironment) => env.id === envId));
+	editApplication(app: Application): Observable<any> {
+		return this._http.put(`${this.baseUrl}/app-environments`, app);
 	}
 
-	getApplicationById(id: string | number) {
-		return of(this.applicationList.find((app: Application) => app.id === id));
+	getAppEnvironmentList(appId: string | number): Observable<AppEnvironment[]> {
+		return this._http.get<AppEnvironment[]>(`${this.baseUrl}/applications/app-environments/${appId}`);
 	}
 
-	addApplication(app: Application) {
-		const nextId = this.applicationList.length + 1;
-		app.id = '' + nextId;
-		this.applicationList.push(app);
-
-		return of({ success: true });
+	getAppEnvironmentById(envId: string | number): Observable<AppEnvironment> {
+		return this._http.get<AppEnvironment>(`${this.baseUrl}/app-environments/${envId}`);
 	}
 
-	editApplication(app: Application) {
-		const idx = this.applicationList.findIndex((appl: Application) => app.id === appl.id);
-		if (idx > -1) {
-			this.applicationList[idx] = app;
-		}
-		return of({ success: true });
+	addAppEnvironment(appEnv: AppEnvironment): Observable<any> {
+		return this._http.post(`${this.baseUrl}/app-environments`, appEnv);
+	}
+
+	editAppEnvironment(appEnv: AppEnvironment): Observable<any> {
+		return this._http.put(`${this.baseUrl}/app-environments`, appEnv);
 	}
 }

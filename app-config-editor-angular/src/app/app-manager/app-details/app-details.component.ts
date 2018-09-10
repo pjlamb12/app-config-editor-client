@@ -41,6 +41,13 @@ export class AppDetailsComponent implements OnInit {
 
 	updateEnvironment(index: number, name: string) {
 		this.appEnvironments[index].name = name;
+
+		const env = this.appEnvironments[index];
+		if (env.id) {
+			this._appManagerService.editAppEnvironment(env);
+		} else {
+			this._appManagerService.addAppEnvironment(env);
+		}
 	}
 
 	removeUnsavedEnvironment(idx: number) {
