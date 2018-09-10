@@ -1,34 +1,12 @@
-config/local.js
-
-node_modules
-
-.tmp
-
-*~
-*#
-.netbeans
-nbproject
-.idea
-.node_history
-dump.rdb
-
-npm-debug.log
-lib-cov
-*.seed
-*.log
-*.out
-*.pid
-
-# Angular
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-**/dist
-**/tmp
-**/out-tsc
+/dist
+/tmp
+/out-tsc
 
 # dependencies
-**/node_modules
+/node_modules
 
 # IDEs and editors
 /.idea

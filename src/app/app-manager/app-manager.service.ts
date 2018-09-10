@@ -8,23 +8,6 @@ import { AppEnvironment } from './classes/app-environment';
 export class AppManagerService {
 	private baseUrl: string = '';
 
-	private applicationList: Application[] = [
-		new Application({
-			id: '1',
-			name: 'Test App 1',
-			details: 'Here are some details',
-			serverDetails: 'here are some server details',
-		}),
-	];
-
-	private appEnvironmentList: AppEnvironment[] = [
-		new AppEnvironment({
-			id: '1',
-			appId: '1',
-			name: 'Testing',
-		}),
-	];
-
 	constructor(private _http: HttpClient) {}
 
 	getApplicationList(): Observable<Application[]> {

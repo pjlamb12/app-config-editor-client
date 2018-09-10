@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgLoadersModule, NgLoadersTypes } from 'ng-loaders';
 import { AlertModule } from 'ngx-bootstrap';
 
@@ -14,6 +14,7 @@ import { HttpErrorInterceptorService } from './http-error-interceptor.service';
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
+		HttpClientModule,
 		AppRoutingModule,
 		LayoutModule,
 		ToastManagerModule,
